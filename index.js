@@ -27,11 +27,13 @@ function onGalleryClick(e) {
 function closeModalClick(e) {
   if (e.target.nodeName === "IMG") return;
   lightbox.classList.remove("is-open");
+  window.removeEventListener("keydown", onEscapeTap);
+  window.removeEventListener("keydown", modalNav);
   modalImg.src = "";
   modalImg.alt = "";
 }
 function onEscapeTap(e) {
-  if (e.code === "Escape" && lightbox.classList.contains("is-open")) {
+  if (e.code === "Escape") {
     closeModalClick(e);
   }
 }
@@ -47,7 +49,11 @@ function modalNav(e) {
       imgIndex += 1;
       break;
   }
-  if (imgIndex > imgList.length - 1) imgIndex = 0;
-  if (imgIndex < 0) imgIndex = imgList.length - 1;
+  if (imgIndex > imgList.length - 1) {
+    imgIndex = 0;
+  }
+  if (imgIndex < 0) {
+    imgIndex = imgList.length - 1;
+  }
   modalImg.src = imgList[imgIndex].original;
 }
